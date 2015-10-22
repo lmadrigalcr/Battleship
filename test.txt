@@ -1,0 +1,2 @@
+(destroyer, [1,2], H).
+(submarine, [3,7], H).
