@@ -14,6 +14,9 @@ read_file(Stream,[X|L]) :-
     read(Stream,X),
     read_file(Stream,L).
 
+get_board(B):-
+  main(B,'my_board'). 
+
 get_cols([_,H|_], H).
 get_cols(C) :-
   main(Xs, 'opponent'),
