@@ -1,4 +1,4 @@
-:- module(filereader, [get_cols/1, get_rows/1]).
+:- module(filereader, [get_board/1, get_rows/1, get_cols/1]).
 
 main(Lines, FileName) :-
     open(FileName, read, Str),
@@ -17,23 +17,29 @@ read_file(Stream,[X|L]) :-
     read_file(Stream,L).
 
 get_board(B):-
-  main(B,'my_board').
+  main(Xs,'my_board'),
+  parse_board(Xs,B).
+
+parse_board([],[]).
+parse_board([H1|T1], [H2|T2]) :-
+  parse_board(T1, T2),
+  convert(H1,H2).
 
 get_cols([_,H|_], H).
 get_cols(C) :-
   main(Xs, 'opponent'),
   get_cols(Xs, Ys),
-  atom_chars(Ys,Zs),
-  convert(Zs, C).
+  convert(Ys, C).
 
 get_rows([H|_], H).
 get_rows(R) :-
   main(Xs, 'opponent'),
   get_rows(Xs, Ys),
-  atom_chars(Ys,Zs),
-  convert(Zs, R).
+  convert(Ys, R).
 
 convert([],[]).
 convert([H1|T1], [H2|T2]) :-
   convert(T1, T2),
-  atom_number(H1,H2).
+  char_number(H1,H2).
+
+char_number(X, R) :- R is X-48.

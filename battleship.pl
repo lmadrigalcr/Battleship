@@ -362,7 +362,7 @@ step(B1, B2, R, C) :-
 
 start :-
     print_welcome,
-    my_board(B1),
+    get_board(B1),
     clear_board(B2),
     get_rows(R),
     get_cols(C),
