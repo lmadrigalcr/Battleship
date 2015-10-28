@@ -1,3 +1,5 @@
+:- module(filereader, [get_cols/1, get_rows/1]).
+
 main(Lines, FileName) :-
     open(FileName, read, Str),
     read_file(Str,Lines),

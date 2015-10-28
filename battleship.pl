@@ -1,5 +1,6 @@
 %% :- module(battleship, []).
 :- use_module(library(clpfd)).
+:- use_module(filereader).
 
 %%%%%%%%%%%
 %% FACTS %%
@@ -363,4 +364,6 @@ start :-
     print_welcome,
     my_board(B1),
     clear_board(B2),
-    step(B1, B2, [2, 5, 1, 0, 3, 2, 1, 2, 4, 2], [2, 5, 0, 2, 2, 5, 1, 1, 2, 2]).
+    get_rows(R),
+    get_cols(C),
+    step(B1, B2, R, C).
