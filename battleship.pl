@@ -1,4 +1,3 @@
-%% :- module(battleship, []).
 :- use_module(library(clpfd)).
 :- use_module(filereader).
 
@@ -31,19 +30,6 @@ indexOf(destroyer, 4).
 indexOf(submarine, 5).
 
 % A sample boards.
-
-my_board([
-    [4,0,0,0,0,0,0,3,3,3],
-    [4,0,0,0,0,0,0,0,5,0],
-    [0,0,0,0,1,0,0,0,0,0],
-    [0,0,0,0,1,0,0,0,4,4],
-    [0,0,0,0,1,0,0,0,0,0],
-    [0,5,0,0,1,0,0,0,0,0],
-    [0,0,0,0,1,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,4,4],
-    [0,2,2,2,2,0,0,0,0,0],
-    [0,0,5,0,0,0,0,0,0,5]
-]).
 
 clear_board([
     [0,0,0,0,0,0,0,0,0,0],
@@ -161,6 +147,14 @@ print_welcome :-
     write(' 2. Durante el turno del programa, este le indicará la celda a la cual esta atacando,'), nl,
     write('    seguidamente usted deberá evaluar la jugada y contestar hit o miss.'), nl,
     write(' 3. El juego termina cuando se hayan hundido todos los barcos de alguno de los jugadores.'), nl, nl.
+
+read_board(B) :-
+    prompt('Archivo (propio): ', X),
+    get_board(X, B).
+
+read_opponent(R, C) :-
+    prompt('Archivo (oponente): ', X), nl,
+    get_opponent_data(X, R, C).
 
 prompt_coordinates(X, Y) :-
   prompt('Fila: ', X),
@@ -312,13 +306,6 @@ max_matrix_index_aux([_|T], I, J, R, E) :-
     R2 is R + 1,
     max_matrix_index_aux(T, I, J, R2, E).
 
-check :-
-    clear_board(B),
-    probability_matrix(B, [2, 5, 1, 0, 3, 2, 1, 2, 4, 2], [2, 5, 0, 2, 2, 5, 1, 1, 2, 2], X),
-    print_matrix(X),
-    max_matrix_index(X, I, J),
-    attack(I, J).
-
 % attack_coordinates/5
 % attack_coordinates(B, R, C, X, Y)
 % Get the attack coordinates on the opponent board.
@@ -362,8 +349,7 @@ step(B1, B2, R, C) :-
 
 start :-
     print_welcome,
-    get_board(B1),
+    read_board(B1),
+    read_opponent(R, C),
     clear_board(B2),
-    get_rows(R),
-    get_cols(C),
     step(B1, B2, R, C).
